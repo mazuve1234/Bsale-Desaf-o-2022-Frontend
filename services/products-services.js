@@ -15,13 +15,30 @@ async function fetchProducts() {
 }
 
 function currentProducts () {
-  return this.products;
+
+  if (this.filter === "" || this.filter === undefined) return this.products;
+  
+  return this.products.filter((product) => product.category ==  this.filter);
+}
+
+async function fetchCategories() {
+  const categories = await getCategories();
+  this.categories = categories;
+  console.log(categories)
+}
+
+function currentCategories () {
+  return this.categories
 }
 
 export const STORE = {
   products: [],
   fetchProducts,
-  currentProducts
+  currentProducts,
+  categories: [],
+  fetchCategories,
+  currentCategories,
+  filter: "",
 };
 
 

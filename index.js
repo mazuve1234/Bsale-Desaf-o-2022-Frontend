@@ -1,13 +1,14 @@
 import DOMHandler from "./dom-handler.js";
-import { getProducts, STORE } from "./services/products-services.js";
-    const products = await getProducts()
+import { getCategories, getProducts, STORE } from "./services/products-services.js";
+
+
+    // const filteredproducts = products
 
 //  async function fetchProducts() {
 //     const products = await getProducts()
 // }
 
 function renderProduct(product) {
-    console.log(product.url_image)
     return  `
     <div>
     <li>
@@ -18,31 +19,59 @@ function renderProduct(product) {
         <p>${product.discount}</p>
       </div>
     </li>
-    </div>
-  `
+    </div>`
   }
 
-function render() {
-
-
-    console.log(products)
+function renderCategories(category) {
     return `
+    <a data-id=${category.id}> ${category.name} </a>
+    `
+}
+
+
+function render() {
+      const products = STORE.currentProducts()
+      const categories = STORE.currentCategories()
+    return `
+      <ul class="js-category-list">
+        ${categories.map(category => renderCategories(category)).join("")}
+      </ul>
       <ul class="js-product-list">
         ${products.map(product => renderProduct(product)).join("")}
       </ul>
     `;
   }
 
+  function listenFilter() {
+    const filters = document.querySelector(".js-category-list")
+
+    filters.addEventListener("click", (event) =>{
+        event.preventDefault();
+        console.log(event.target.dataset.id)
+        STORE.filter = event.target.dataset.id
+        console.log(STORE.filter)
+        DOMHandler.load(HomePage)
+
+    })
+  }
+
+
+
   export const HomePage = {
     toString() {
       return render();
     },
+    addListeners() {
+        listenFilter();
+    }
   };
 
+  
   async function init() {
     try {
-        console.log("hola")
-
+        console.log("hola")   
+        await STORE.fetchProducts();
+        await STORE.fetchCategories();
         DOMHandler.load(HomePage);
     } catch (error) {
     }
