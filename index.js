@@ -9,34 +9,27 @@ import { getProducts, STORE } from "./services/products-services.js";
 function renderProduct(product) {
     console.log(product.url_image)
     return  `
+    <div>
     <li>
-      <img src=${product.url_image} alt="product_image"/>
-      <p>${product.name}</p>
-      <p>${product.price}</p>
-      <p>${product.discount}</p>
+      <img class="product-image" src=${product.url_image} alt="product_image"/>
+      <div class="product-card">
+        <p class="content-sm bold">${product.name}</p>
+        <p>S/. ${product.price/100}</p>
+        <p>${product.discount}</p>
+      </div>
     </li>
+    </div>
   `
   }
 
 function render() {
 
-    // const list = fetchProducts()
+
     console.log(products)
     return `
-    <main class="section">
-      <section class="container">
-        <div
-        <div class="flex space-between container-header">
-          <h1 class="heading text-center mb-2 heading--sm gray-header">Bsale</h1>
-          <button class="js-logout-link link">Logout</button>
-        </div>
-        <div class="flex flex-end">
-          <ul class="js-product-list">
-          ${products.map(product => renderProduct(product)).join("")}
-          </ul>
-        </div>
-      </section>
-    </main>
+      <ul class="js-product-list">
+        ${products.map(product => renderProduct(product)).join("")}
+      </ul>
     `;
   }
 

@@ -60,4 +60,18 @@
   margin-left: 60px;
 }
 
-/* .js-product- */
+.js-product-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.product-card {
+  border: 2px solid blue;
+  background-color: lightgoldenrodyellow;
+}
+
+.product-image {
+  height: 246px;
+}
