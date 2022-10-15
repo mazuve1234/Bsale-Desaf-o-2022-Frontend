@@ -8,6 +8,8 @@
 
 .container-header {
   padding: 12px 10px;
+  background-color: yellow;
+  margin-bottom: 1rem;
 }
 
 .container-header2 {
@@ -71,11 +73,26 @@
   border: 2px solid blue;
   background-color: lightgoldenrodyellow;
   padding: 10px;
+  margin-bottom: 1rem;
 }
 
 .product-image {
   height: 246px;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
+  width: 250px;
 }
+
+.price-before {
+  color:red;
+  text-decoration: line-through;
+}
+
+.price-after {
+  color: green;
+  font-weight: bold;
+}
+
 
 .js-category-list {
   display: flex;
@@ -90,4 +107,9 @@
   color: orange;
   padding: 5px;
   font-weight: bold;
+}
+
+.js-search {
+  border-radius: 5px;
+  padding:5px;
 }

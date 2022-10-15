@@ -12,11 +12,13 @@ function renderProduct(product) {
     return  `
     <div>
     <li>
-      <img class="product-image" src=${product.url_image} alt="product_image"/>
+      <img class="product-image" src=${product.url_image ? product.url_image : "https://thumbs.dreamstime.com/z/link-not-found-12739222.jpg"} alt="product_image"/>
       <div class="product-card">
         <p class="content-sm bold">${product.name}</p>
-        <p>S/. ${product.price/100}</p>
-        <p>${product.discount}</p>
+        <div class="flex gap-4">
+          ${product.discount ? `<p class="price-before">S/. ${(product.price/100).toFixed(2)}</p>`: `<p> S/. ${(product.price/100).toFixed(2)}</p>`}
+          ${product.discount ? `<p class="price-after">S/. ${Math.round((product.price/100) * (1-(product.discount/100))).toFixed(2)}</p>` : ""}
+        </div>
       </div>
     </li>
     </div>`
@@ -30,9 +32,10 @@ function renderCategory(category) {
 
 
 function render() {
-      const products = STORE.currentProductsFiltered()
+      const products = STORE.currentProductsFiltered().sort((a, b) => a.name.normalize().localeCompare(b.name.normalize()))
       const categories = STORE.currentCategories()
     return `
+      <p class="content-xs mb-4"> Secret: Click in between the buttons to reset the filters :) </p>
       <ul class="js-category-list">
         ${categories.map(category => renderCategory(category)).join("")}
       </ul>
@@ -47,7 +50,6 @@ function render() {
 
     filters.addEventListener("click", (event) =>{
         event.preventDefault();
-        console.log(event.target.dataset.id)
         STORE.filter = event.target.dataset.id
         DOMHandler.load(HomePage)
     })
@@ -58,7 +60,6 @@ function render() {
     search.addEventListener("keypress",(e) =>{
       if (e.key === 'Enter') {
         e.preventDefault();
-        console.log(e.target.value)
         STORE.searchQuery = e.target.value.toLowerCase()
         DOMHandler.load(HomePage)
       }
