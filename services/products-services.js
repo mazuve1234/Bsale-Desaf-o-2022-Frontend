@@ -11,20 +11,23 @@ export async function getCategories() {
 async function fetchProducts() {
   const products = await getProducts();
   this.products = products;
-  console.log(products)
 }
 
-function currentProducts () {
+function currentProductsFiltered () {
+  if ((this.filter === "" || this.filter === undefined) && this.searchQuery === "" ) return this.products
 
-  if (this.filter === "" || this.filter === undefined) return this.products;
+  if (this.filter === "" || this.filter === undefined) {
+    return this.products.filter((product) => product.name.toLowerCase().includes(this.searchQuery));
+  } ;
   
-  return this.products.filter((product) => product.category ==  this.filter);
+  return this.products.filter((product) => product.category ==  this.filter && product.name.toLowerCase().includes(this.searchQuery));
 }
+
+
 
 async function fetchCategories() {
   const categories = await getCategories();
   this.categories = categories;
-  console.log(categories)
 }
 
 function currentCategories () {
@@ -34,11 +37,12 @@ function currentCategories () {
 export const STORE = {
   products: [],
   fetchProducts,
-  currentProducts,
+  currentProductsFiltered,
   categories: [],
   fetchCategories,
   currentCategories,
   filter: "",
+  searchQuery: "",
 };
 
 

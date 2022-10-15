@@ -76,3 +76,18 @@
 .product-image {
   height: 246px;
 }
+
+.js-category-list {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.category-button {
+  border-radius: 10px;
+  border-color: cyan;
+  background-color: lightgreen;
+  color: orange;
+  padding: 5px;
+  font-weight: bold;
+}

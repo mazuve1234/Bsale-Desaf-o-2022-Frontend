@@ -22,19 +22,19 @@ function renderProduct(product) {
     </div>`
   }
 
-function renderCategories(category) {
+function renderCategory(category) {
     return `
-    <a data-id=${category.id}> ${category.name} </a>
+    <button class="category-button" data-id=${category.id}> ${category.name.toUpperCase()} </button>
     `
 }
 
 
 function render() {
-      const products = STORE.currentProducts()
+      const products = STORE.currentProductsFiltered()
       const categories = STORE.currentCategories()
     return `
       <ul class="js-category-list">
-        ${categories.map(category => renderCategories(category)).join("")}
+        ${categories.map(category => renderCategory(category)).join("")}
       </ul>
       <ul class="js-product-list">
         ${products.map(product => renderProduct(product)).join("")}
@@ -49,13 +49,22 @@ function render() {
         event.preventDefault();
         console.log(event.target.dataset.id)
         STORE.filter = event.target.dataset.id
-        console.log(STORE.filter)
         DOMHandler.load(HomePage)
-
     })
   }
 
+  function listenSearch() {
+    const search = document.querySelector(".js-search")
+    search.addEventListener("keypress",(e) =>{
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        console.log(e.target.value)
+        STORE.searchQuery = e.target.value.toLowerCase()
+        DOMHandler.load(HomePage)
+      }
+  })
 
+  }
 
   export const HomePage = {
     toString() {
@@ -63,6 +72,7 @@ function render() {
     },
     addListeners() {
         listenFilter();
+        listenSearch();
     }
   };
 
