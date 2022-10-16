@@ -60,7 +60,10 @@ This will handle the DOM, allowing the inner HTML elements to be rendered each t
 
 export default DOMHandler;
 ```
-### Insert the API url and create the fetch function
+
+## Services
+
+### Insert the API url and create the apiFetch function
 This function will fetch the data from the API, requiring its "url"(the place where it's hosted) and endpoints from each route, declared in the Rails app.
 ```bash
 import { BASE_URI} from "../config.js";
@@ -92,6 +95,7 @@ export default async function apiFetch(endPoint, {method, headers, body} = {}) {
   return data;
 }
 ```
+
 ### Fetch the data
 Since the apiFetch function returns a Promise, the async/await duo will be used to resolve it.
 ```bash
@@ -107,7 +111,7 @@ export async function getCategories() {
 ```
 
 ### Fill the data on arrays and create the filter function
-Since the apiFetch function returns a Promise, the async/await duo will be used to resolve it.
+The constant STORE will store the fetch functions, the product and category arrays and the filter function so the data sent to the user is the correct one.
 ```bash
 async function fetchProducts() {
   const products = await getProducts();
@@ -143,6 +147,7 @@ export const STORE = {
   categoryFilter: "",
   searchQuery: "",
 };
-
 ```
+
+
 
