@@ -14,7 +14,6 @@ async function fetchProducts() {
 }
 
 function currentProductsFiltered () {
-  console.log(this.categoryFilter)
   if ((this.categoryFilter === "" || this.categoryFilter === undefined) && this.searchQuery === "" ) return this.products
 
   if (this.categoryFilter === "" || this.categoryFilter === undefined) {
