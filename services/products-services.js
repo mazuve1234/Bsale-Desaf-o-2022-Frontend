@@ -14,16 +14,15 @@ async function fetchProducts() {
 }
 
 function currentProductsFiltered () {
-  if ((this.filter === "" || this.filter === undefined) && this.searchQuery === "" ) return this.products
+  console.log(this.categoryFilter)
+  if ((this.categoryFilter === "" || this.categoryFilter === undefined) && this.searchQuery === "" ) return this.products
 
-  if (this.filter === "" || this.filter === undefined) {
+  if (this.categoryFilter === "" || this.categoryFilter === undefined) {
     return this.products.filter((product) => product.name.toLowerCase().includes(this.searchQuery));
   } ;
   
-  return this.products.filter((product) => product.category ==  this.filter && product.name.toLowerCase().includes(this.searchQuery));
+  return this.products.filter((product) => product.category ==  this.categoryFilter && product.name.toLowerCase().includes(this.searchQuery));
 }
-
-
 
 async function fetchCategories() {
   const categories = await getCategories();
@@ -41,7 +40,7 @@ export const STORE = {
   categories: [],
   fetchCategories,
   currentCategories,
-  filter: "",
+  categoryFilter: "",
   searchQuery: "",
 };
 

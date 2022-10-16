@@ -73,3 +73,10 @@
 .secondary {
     color: #595959;
 }
+
+.button-style {
+    color: red;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 400;
+}
