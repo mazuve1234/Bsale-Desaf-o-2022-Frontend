@@ -36,5 +36,113 @@ The header will contain the name of the company, a button for resetting the filt
       </section>
     </main>
   </body>
+```
+### Create the DOMHandler
+This will handle the DOM, allowing the inner HTML elements to be rendered each time a function is executed. 
+```bash
+  const DOMHandler = function (parentSelector) {
+  const parent = document.querySelector(parentSelector);
+
+  if (!parent) throw new Error("Parent not found");
+
+  return {
+    module: null,
+    load(module) {
+      this.module = module;
+      parent.innerHTML = module;
+      module.addListeners();
+    },
+    reload() {
+      this.load(this.module);
+    },
+  };
+};
+
+export default DOMHandler;
+```
+### Insert the API url and create the fetch function
+This function will fetch the data from the API, requiring its "url"(the place where it's hosted) and endpoints from each route, declared in the Rails app.
+```bash
+import { BASE_URI} from "../config.js";
+
+export default async function apiFetch(endPoint, {method, headers, body} = {}) {
+
+
+  const config = {
+    method: method || (body ? "POST": "GET"),
+  }
+
+  const response = await fetch(BASE_URI+endPoint, config);
+  let data;
+  if (!response.ok) {
+    try {
+      data = await response.json();
+    } catch (error) {
+      throw new Error(response.statusText);
+    }
+    
+    throw new Error(JSON.stringify(data));
+  }
+
+  try {
+    data = await response.json();
+  } catch (error) {
+    data = response.statusText;
+  }
+  return data;
+}
+```
+### Fetch the data
+Since the apiFetch function returns a Promise, the async/await duo will be used to resolve it.
+```bash
+import apiFetch from "./api-fetch.js";
+
+export async function getProducts() {
+  return await apiFetch("/product/index");
+}
+
+export async function getCategories() {
+  return await apiFetch("/category/index");
+}
+```
+
+### Fill the data on arrays and create the filter function
+Since the apiFetch function returns a Promise, the async/await duo will be used to resolve it.
+```bash
+async function fetchProducts() {
+  const products = await getProducts();
+  this.products = products;
+}
+
+function currentProductsFiltered () {
+  if ((this.categoryFilter === "" || this.categoryFilter === undefined) && this.searchQuery === "" ) return this.products
+
+  if (this.categoryFilter === "" || this.categoryFilter === undefined) {
+    return this.products.filter((product) => product.name.toLowerCase().includes(this.searchQuery));
+  } ;
+  
+  return this.products.filter((product) => product.category ==  this.categoryFilter && product.name.toLowerCase().includes(this.searchQuery));
+}
+
+async function fetchCategories() {
+  const categories = await getCategories();
+  this.categories = categories;
+}
+
+function currentCategories () {
+  return this.categories
+}
+
+export const STORE = {
+  products: [],
+  fetchProducts,
+  currentProductsFiltered,
+  categories: [],
+  fetchCategories,
+  currentCategories,
+  categoryFilter: "",
+  searchQuery: "",
+};
 
 ```
+
