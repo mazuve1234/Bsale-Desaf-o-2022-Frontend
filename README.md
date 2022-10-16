@@ -1,4 +1,4 @@
-# Bsale-Desaf-o-2022-Frontend
+# Bsale-Desafio-2022-Frontend
 ### Create the html index page
 This is the first step. The connection with the browser will be stablished and the css style page will be chosen.
 ```bash
