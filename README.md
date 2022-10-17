@@ -32,6 +32,7 @@ The header will contain the name of the company, a button for resetting the filt
             <div id="root"></div>
             <script type="module" src="index.js"></script>
 
+
     
       </section>
     </main>
@@ -147,6 +148,63 @@ export const STORE = {
   categoryFilter: "",
   searchQuery: "",
 };
+```
+
+### Initialize the fetching and home page
+With this function inside `index.js`, the products and categories will be fetched from the API and the home page and all of its components will be loaded witht he DOMHandler.
+```bash
+import DOMHandler from "./dom-handler.js";
+import { HomePage } from "./HomePage/HomePage.js";
+import { STORE } from "./services/products-services.js";
+
+  
+async function init() {
+  try {
+    await STORE.fetchProducts();
+    await STORE.fetchCategories();
+    DOMHandler("#root").load(HomePage);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+init()
+
+```
+
+
+## Testing
+### Precense of list of categories and products
+With the help of the JEST and Babel libraries, tests can be run on Javascript. Simply execute the command `$npm test` on the console to check if it was successful.
+```bash
+import { beforeEach, expect } from "@jest/globals";
+import DOMHandler from "../dom-handler.js";
+import { HomePage } from "./HomePage.js";
+
+
+
+
+let App;
+
+beforeEach(() => {
+  // Render the component on the screen
+  document.body.innerHTML = `<div id="root"></div>`;
+  App = DOMHandler("#root");
+  App.load(HomePage);
+
+});
+
+test("List renders on the DOM", () => {
+  // Capture some elements
+  const categoryList = document.querySelector(".js-category-list");
+  const productList = document.querySelector(".js-product-list");
+
+  // Assert some state about the elements on the screen.
+
+  expect(categoryList).not.toBeNull();
+  expect(productList).not.toBeNull();
+});
+
 ```
 
 
