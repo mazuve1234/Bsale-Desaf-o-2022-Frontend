@@ -10,6 +10,7 @@
   padding: 12px 10px;
   background-color: yellow;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .container-header2 {
@@ -24,10 +25,10 @@
 }
 
 .js-product-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
 }
 
 .product-card {
@@ -35,6 +36,7 @@
   background-color: lightgoldenrodyellow;
   padding: 10px;
   margin-bottom: 1rem;
+  width: 250px;
 }
 
 .product-image {
@@ -58,7 +60,8 @@
 .js-category-list {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
 }
 
 .category-button {
@@ -66,8 +69,9 @@
   border-color: cyan;
   background-color: lightgreen;
   color: orange;
-  padding: 5px;
+  padding: 20px;
   font-weight: bold;
+  max-width: 500px;
 }
 
 .js-search {

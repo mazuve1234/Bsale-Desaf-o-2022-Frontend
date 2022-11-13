@@ -3,6 +3,7 @@
     display: block;
   overflow: auto;
     max-height: 100%;
+    max-width: 100%;
   }
 
   .section-sm {
@@ -10,7 +11,7 @@
   }
   
   .container {
-    max-width: 760px;
+    max-width: 100%;
     margin: auto;
     max-height: 100%;
     background-color: lightgray;
