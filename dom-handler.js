@@ -1,3 +1,6 @@
+
+// Esta constante manipula al DOM y permite el renderizado de los componentes deseados y el funcionmiento
+// de los listeners.
 const DOMHandler = function (parentSelector) {
   const parent = document.querySelector(parentSelector);
 

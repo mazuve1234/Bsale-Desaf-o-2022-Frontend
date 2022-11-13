@@ -1,4 +1,5 @@
 
+// Esta función estructura los datos recibidos de cada producto.
 export function renderProduct(product) {
     return  `
     <div>
@@ -15,6 +16,7 @@ export function renderProduct(product) {
     </div>`
   }
 
+// Esta función estructura los datos recibidos de cada categorpia
 export function renderCategory(category) {
     return `
     <button class="category-button" data-id=${category.id}> ${category.name.toUpperCase()} </button>

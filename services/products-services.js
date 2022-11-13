@@ -1,5 +1,6 @@
 import apiFetch from "./api-fetch.js";
 
+// Estas funciones utilizan la función de apiFetch para conectar con el API y extraer los datos.
 export async function getProductsSearched(id) {
   return await apiFetch(`/product/search?query=${id}`);
 }
@@ -15,12 +16,9 @@ async function fetchProducts(id='') {
   this.products !== [] ? this.loader = false : this.loader = true;
 }
 
+// Esta función filtra la lista de productos de acuerdo a la categoría deseada
 function currentProductsFiltered () {
   if (this.categoryFilter === "" || this.categoryFilter === undefined) return this.products
-
-  // if (this.categoryFilter === "" || this.categoryFilter === undefined) {
-  //   return this.products.filter((product) => product.name.toLowerCase().includes(this.searchQuery));
-  // } ;
   
   return this.products.filter((product) => product.category ==  this.categoryFilter);
 }
@@ -34,6 +32,8 @@ function currentCategories () {
   return this.categories
 }
 
+// El STORE guarda todos los datos extraídos de la API y los filtros necesarios para renderizar 
+// los datos deseados en el HomePage
 export const STORE = {
   products: [],
   loader: true,
@@ -43,7 +43,6 @@ export const STORE = {
   fetchCategories,
   currentCategories,
   categoryFilter: "",
-  searchQuery: "",
 };
 
 

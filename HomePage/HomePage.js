@@ -2,6 +2,7 @@ import DOMHandler from "../dom-handler.js";
 import { renderCategory, renderProduct } from "./renderComponents.js";
 import { STORE } from "../services/products-services.js";
 
+// Esta funcíon renderiza las listas de categorías y productos con sus respectivos estilos
 function render() {
     const products = STORE.currentProductsFiltered().sort((a, b) => a.name.normalize().localeCompare(b.name.normalize()))
     const categories = STORE.currentCategories()
@@ -19,6 +20,8 @@ function render() {
   `;
 }
 
+// Esta función inserta el listener que al hacer click en cada botón de categoría se añada el filtro de 
+// categoría correspondiente al listado de productos
 function listenFilter() {
   const filters = document.querySelector(".js-category-list")
   filters.addEventListener("click", (event) =>{
@@ -29,6 +32,8 @@ function listenFilter() {
   })
 }
 
+// Esta función inserta el listener que al presionar el botor ENTER corra el servicio de fetchProducts y 
+// se pueda extraer la lista de productos deseados de acuerdo a lo digitado en la barra de busqueda.
 async function listenSearch() {
   const search = document.querySelector(".js-search")
   if (search) {
@@ -41,6 +46,8 @@ async function listenSearch() {
   })}
 }
 
+// Esta función inserta el listener que al presionar el botón de RESET PAGE se actualize la página y vuelva
+// a su estado inicial
 function listenReset() {
   const reset = document.querySelector(".js-reset")
   if (reset) {
@@ -52,6 +59,8 @@ function listenReset() {
   })}
 }
 
+// Este objeto convierte a String lo que se quiere renderizar y añade los listeners para manipular la 
+// visualización de contenido en la página web.
 export const HomePage = {
   toString() {
     return render();

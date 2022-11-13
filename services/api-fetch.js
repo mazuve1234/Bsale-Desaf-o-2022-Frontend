@@ -1,5 +1,7 @@
 import { BASE_URI} from "../config.js";
 
+// Esta función conecta con las rutas del API utilizando la constante BASE_URI y extrae la información
+// recibida en un JSON.
 export default async function apiFetch(endPoint, {method, headers, body} = {}) {
 
 

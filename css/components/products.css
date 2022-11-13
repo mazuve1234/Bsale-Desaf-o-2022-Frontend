@@ -23,45 +23,6 @@
   display: flex;
 }
 
-.contact-list li div {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-}
-
-.contact-list li div a {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.contact-list .avatar-small {
-  margin: 12px 0 12px 20px;
-}
-
-.contact-list .js-contact-show {
-  margin-left: 32px;
-  color: #262626;
-}
-
-.contact-list a img {
-  margin-right: 16px;
-}
-
-.js-create-link {
-  display: flex;
-  justify-content: flex-end;
-  background-color: #e8eaed;
-  padding: 16px;
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
-}
-
-.contact-detail {
-  margin-left: 60px;
-}
-
 .js-product-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
