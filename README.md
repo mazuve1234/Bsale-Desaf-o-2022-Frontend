@@ -1,4 +1,8 @@
 # Bsale-Desafio-2022-Frontend
+
+Esta página web fue diseñada utilizando los lenguajes de programación HTML, CSS y Javascript puro. Para el desarrollo de la API, se utilizó el framework Ruby on Rails.
+Se logra extraer datos de una base de datos y la página web es capaz de visualizarlos y filtrarlos.
+
 ### Crear el archivo index.html
 Este es el primer paso. Se establecerá la conexión con el navegador y se elegirá la página de estilo css.```bash
 <!DOCTYPE html>
@@ -116,19 +120,18 @@ Los datos deberían regresar dentro de la estructura de un JSON:
 
 ### Rellenar los datos en matrices y cree la función de filtro.
 La constante STORE almacenará las funciones de búsqueda, las matrices de productos y categorías y la función de filtro para que los datos enviados al usuario sean los correctos.```bash
-async function fetchProducts() {
-  const products = await getProducts();
+async function fetchProducts(id='') {
+  // this.loader = true;
+  const products = await getProductsSearched(id);
   this.products = products;
+  this.products !== [] ? this.loader = false : this.loader = true;
 }
 
+// Esta función filtra la lista de productos de acuerdo a la categoría deseada
 function currentProductsFiltered () {
-  if ((this.categoryFilter === "" || this.categoryFilter === undefined) && this.searchQuery === "" ) return this.products
-
-  if (this.categoryFilter === "" || this.categoryFilter === undefined) {
-    return this.products.filter((product) => product.name.toLowerCase().includes(this.searchQuery));
-  } ;
+  if (this.categoryFilter === "" || this.categoryFilter === undefined) return this.products
   
-  return this.products.filter((product) => product.category ==  this.categoryFilter && product.name.toLowerCase().includes(this.searchQuery));
+  return this.products.filter((product) => product.category ==  this.categoryFilter);
 }
 
 async function fetchCategories() {
@@ -140,16 +143,19 @@ function currentCategories () {
   return this.categories
 }
 
+// El STORE guarda todos los datos extraídos de la API y los filtros necesarios para renderizar 
+// los datos deseados en el HomePage
 export const STORE = {
   products: [],
+  loader: true,
   fetchProducts,
   currentProductsFiltered,
   categories: [],
   fetchCategories,
   currentCategories,
   categoryFilter: "",
-  searchQuery: "",
 };
+
 ```
 
 ### Inicializar la búsqueda y la página de inicio
@@ -206,6 +212,8 @@ test("List renders on the DOM", () => {
 });
 
 ```
+![image](https://user-images.githubusercontent.com/104693521/201513186-a6f05e39-16a2-433c-848b-38f9129bb98e.png)
+
 
 
 
