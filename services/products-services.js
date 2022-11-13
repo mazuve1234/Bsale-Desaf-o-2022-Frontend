@@ -9,18 +9,20 @@ export async function getCategories() {
 }
 
 async function fetchProducts(id='') {
+  // this.loader = true;
   const products = await getProductsSearched(id);
   this.products = products;
+  this.products !== [] ? this.loader = false : this.loader = true;
 }
 
 function currentProductsFiltered () {
-  if ((this.categoryFilter === "" || this.categoryFilter === undefined) && this.searchQuery === "" ) return this.products
+  if (this.categoryFilter === "" || this.categoryFilter === undefined) return this.products
 
-  if (this.categoryFilter === "" || this.categoryFilter === undefined) {
-    return this.products.filter((product) => product.name.toLowerCase().includes(this.searchQuery));
-  } ;
+  // if (this.categoryFilter === "" || this.categoryFilter === undefined) {
+  //   return this.products.filter((product) => product.name.toLowerCase().includes(this.searchQuery));
+  // } ;
   
-  return this.products.filter((product) => product.category ==  this.categoryFilter && product.name.toLowerCase().includes(this.searchQuery));
+  return this.products.filter((product) => product.category ==  this.categoryFilter);
 }
 
 async function fetchCategories() {
@@ -34,6 +36,7 @@ function currentCategories () {
 
 export const STORE = {
   products: [],
+  loader: true,
   fetchProducts,
   currentProductsFiltered,
   categories: [],

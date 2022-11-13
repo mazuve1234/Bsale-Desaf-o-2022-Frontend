@@ -5,13 +5,16 @@ import { STORE } from "../services/products-services.js";
 function render() {
     const products = STORE.currentProductsFiltered().sort((a, b) => a.name.normalize().localeCompare(b.name.normalize()))
     const categories = STORE.currentCategories()
+    console.log(products)
   return `
     <p class="content-xs mb-4"> Secret: Click in between the buttons to reset the category filters :) </p>
     <ul class="js-category-list">
       ${categories.map(category => renderCategory(category)).join("")}
     </ul>
+    ${STORE.loader === true ? `<p>Cargando</p>` : ``} 
     <ul class="js-product-list">
-      ${products.map(product => renderProduct(product)).join("")}
+      ${products.length >= 1 ? products.map(product => renderProduct(product)).join("") 
+                              : `<li class="message"> NO SE HAN ENCONTRADOS PRODUCTOS CON LA BUSQUEDA DESEADA :(</li>`}
     </ul>
   `;
 }
@@ -41,11 +44,11 @@ async function listenSearch() {
 function listenReset() {
   const reset = document.querySelector(".js-reset")
   if (reset) {
-  reset.addEventListener("click",(event) =>{
+  reset.addEventListener("click",async (event) =>{
       event.preventDefault();
       STORE.categoryFilter = ""
-      STORE.searchQuery = ""
       DOMHandler("#root").load(HomePage)
+      location.reload()
   })}
 }
 
