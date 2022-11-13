@@ -26,13 +26,13 @@ function listenFilter() {
   })
 }
 
-function listenSearch() {
+async function listenSearch() {
   const search = document.querySelector(".js-search")
   if (search) {
-  search.addEventListener("keypress",(e) =>{
+  search.addEventListener("keypress",async (e) =>{
     if (e.key === 'Enter') {
       e.preventDefault();
-      STORE.searchQuery = e.target.value.toLowerCase()
+      await STORE.fetchProducts(e.target.value.toLowerCase())
       DOMHandler("#root").load(HomePage)
     }
   })}

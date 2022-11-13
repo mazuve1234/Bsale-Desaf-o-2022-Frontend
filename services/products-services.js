@@ -1,15 +1,15 @@
 import apiFetch from "./api-fetch.js";
 
-export async function getProducts() {
-  return await apiFetch("/product/index");
+export async function getProductsSearched(id) {
+  return await apiFetch(`/product/search?query=${id}`);
 }
 
 export async function getCategories() {
   return await apiFetch("/category/index");
 }
 
-async function fetchProducts() {
-  const products = await getProducts();
+async function fetchProducts(id='') {
+  const products = await getProductsSearched(id);
   this.products = products;
 }
 
