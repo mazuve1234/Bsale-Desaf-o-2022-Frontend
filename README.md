@@ -185,7 +185,8 @@ init()
 
 ## Pruebas
 ### Presencia de listado de categorías y productos
-Con la ayuda de las bibliotecas JEST y Babel, las pruebas se pueden ejecutar en Javascript. Simplemente ejecute el comando `$npm test` en la consola para verificar si tuvo éxito.```bash
+Con la ayuda de las bibliotecas JEST y Babel, las pruebas se pueden ejecutar en Javascript. Simplemente ejecute el comando `$npm test` en la consola para verificar si tuvo éxito.
+```bash
 import { beforeEach, expect } from "@jest/globals";
 import DOMHandler from "../dom-handler.js";
 import { HomePage } from "./HomePage.js";
@@ -212,7 +213,9 @@ test("List renders on the DOM", () => {
 });
 
 ```
-![image](https://user-images.githubusercontent.com/104693521/201513186-a6f05e39-16a2-433c-848b-38f9129bb98e.png)
+![image](https://user-images.githubusercontent.com/104693521/201513300-6f05d583-6426-488a-aced-8d7f545ad923.png)
+
+
 
 
 
