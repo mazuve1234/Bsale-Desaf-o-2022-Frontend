@@ -1,6 +1,6 @@
 # Bsale-Desafio-2022-Frontend
 ### Create the html index page
-This is the first step. The connection with the browser will be stablished and the css style page will be chosen.
+This is the first step. The connection with the browser will be established and the css style page will be chosen.
 ```bash
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +32,7 @@ The header will contain the name of the company, a button for resetting the filt
             <div id="root"></div>
             <script type="module" src="index.js"></script>
 
+
     
       </section>
     </main>
@@ -60,7 +61,10 @@ This will handle the DOM, allowing the inner HTML elements to be rendered each t
 
 export default DOMHandler;
 ```
-### Insert the API url and create the fetch function
+
+## Services
+
+### Insert the API url and create the apiFetch function
 This function will fetch the data from the API, requiring its "url"(the place where it's hosted) and endpoints from each route, declared in the Rails app.
 ```bash
 import { BASE_URI} from "../config.js";
@@ -92,6 +96,7 @@ export default async function apiFetch(endPoint, {method, headers, body} = {}) {
   return data;
 }
 ```
+
 ### Fetch the data
 Since the apiFetch function returns a Promise, the async/await duo will be used to resolve it.
 ```bash
@@ -107,7 +112,7 @@ export async function getCategories() {
 ```
 
 ### Fill the data on arrays and create the filter function
-Since the apiFetch function returns a Promise, the async/await duo will be used to resolve it.
+The constant STORE will store the fetch functions, the product and category arrays and the filter function so the data sent to the user is the correct one.
 ```bash
 async function fetchProducts() {
   const products = await getProducts();
@@ -143,6 +148,64 @@ export const STORE = {
   categoryFilter: "",
   searchQuery: "",
 };
+```
+
+### Initialize the fetching and home page
+With this function inside `index.js`, the products and categories will be fetched from the API and the home page and all of its components will be loaded witht he DOMHandler.
+```bash
+import DOMHandler from "./dom-handler.js";
+import { HomePage } from "./HomePage/HomePage.js";
+import { STORE } from "./services/products-services.js";
+
+  
+async function init() {
+  try {
+    await STORE.fetchProducts();
+    await STORE.fetchCategories();
+    DOMHandler("#root").load(HomePage);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+init()
 
 ```
+
+
+## Testing
+### Precense of list of categories and products
+With the help of the JEST and Babel libraries, tests can be run on Javascript. Simply execute the command `$npm test` on the console to check if it was successful.
+```bash
+import { beforeEach, expect } from "@jest/globals";
+import DOMHandler from "../dom-handler.js";
+import { HomePage } from "./HomePage.js";
+
+
+
+
+let App;
+
+beforeEach(() => {
+  // Render the component on the screen
+  document.body.innerHTML = `<div id="root"></div>`;
+  App = DOMHandler("#root");
+  App.load(HomePage);
+
+});
+
+test("List renders on the DOM", () => {
+  // Capture some elements
+  const categoryList = document.querySelector(".js-category-list");
+  const productList = document.querySelector(".js-product-list");
+
+  // Assert some state about the elements on the screen.
+
+  expect(categoryList).not.toBeNull();
+  expect(productList).not.toBeNull();
+});
+
+```
+
+
 
