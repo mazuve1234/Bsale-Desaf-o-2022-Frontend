@@ -105,13 +105,15 @@ Dado que la función apiFetch devuelve una Promesa, se usará el dúo async/awai
 ```bash
 import apiFetch from "./api-fetch.js";
 
-export async function getProducts() {
-  return await apiFetch("/product/index");
+// Estas funciones utilizan la función de apiFetch para conectar con el API y extraer los datos.
+export async function getProductsSearched(id) {
+  return await apiFetch(`/product/search?query=${id}`);
 }
 
 export async function getCategories() {
   return await apiFetch("/category/index");
 }
+
 ```
 Los datos deberían regresar dentro de la estructura de un JSON:
 ![image](https://user-images.githubusercontent.com/104693521/201512845-8f6423f6-ebff-4752-8cbf-8bc358497dfc.png)
