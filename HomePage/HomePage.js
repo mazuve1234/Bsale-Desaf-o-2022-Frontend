@@ -31,19 +31,19 @@ function listenFilter() {
   })
 }
 
+
 // Esta función inserta el listener que al presionar el botor ENTER corra el servicio de fetchProducts y 
 // se pueda extraer la lista de productos deseados de acuerdo a lo digitado en la barra de busqueda.
-async function listenSearch() {
-  const search = document.querySelector(".js-search")
-  if (search) {
-  search.addEventListener("keypress",async (e) =>{
+document.querySelector('.js-search').addEventListener("keypress", async function listenSearch(e) {
+  // const search = document.querySelector(".js-search")
+  // if (search) {
+  // search.addEventListener("keypress",async (e) =>{
     if (e.key === 'Enter') {
       e.preventDefault();
       await STORE.fetchProducts(e.target.value.toLowerCase())
       DOMHandler("#root").load(HomePage)
     }
-  })}
-}
+  })
 
 // Esta función inserta el listener que al presionar el botón de RESET PAGE se actualize la página y vuelva
 // a su estado inicial
@@ -66,7 +66,6 @@ export const HomePage = {
   },
   addListeners() {
       listenFilter();
-      listenSearch();
       listenReset();
   }
 };
