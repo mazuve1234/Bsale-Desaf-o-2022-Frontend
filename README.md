@@ -1,7 +1,10 @@
 # Bsale-Desafio-2022-Frontend
-### Create the html index page
-This is the first step. The connection with the browser will be established and the css style page will be chosen.
-```bash
+
+Esta página web fue diseñada utilizando los lenguajes de programación HTML, CSS y Javascript puro. Para el desarrollo de la API, se utilizó el framework Ruby on Rails.
+Se logra extraer datos de una base de datos y la página web es capaz de visualizarlos y filtrarlos.
+
+### Crear el archivo index.html
+Este es el primer paso. Se establecerá la conexión con el navegador y se elegirá la página de estilo css.```bash
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,8 +17,8 @@ This is the first step. The connection with the browser will be established and 
   </body>
 </html>
 ```
-### Create the header and script
-The header will contain the name of the company, a button for resetting the filters and a search input. The script will execute the javascript code.
+### Crear el encabezado y el guión.
+El encabezado contendrá el nombre de la empresa, un botón para restablecer los filtros y una entrada de búsqueda. El script ejecutará el código javascript.
 ```bash
   <body>
     <main class="section">
@@ -38,8 +41,8 @@ The header will contain the name of the company, a button for resetting the filt
     </main>
   </body>
 ```
-### Create the DOMHandler
-This will handle the DOM, allowing the inner HTML elements to be rendered each time a function is executed. 
+### Crear el DOMHandler
+Esto manejará el DOM, permitiendo que los elementos HTML internos se representen cada vez que se ejecuta una función.
 ```bash
   const DOMHandler = function (parentSelector) {
   const parent = document.querySelector(parentSelector);
@@ -62,10 +65,10 @@ This will handle the DOM, allowing the inner HTML elements to be rendered each t
 export default DOMHandler;
 ```
 
-## Services
+## Servicios
 
-### Insert the API url and create the apiFetch function
-This function will fetch the data from the API, requiring its "url"(the place where it's hosted) and endpoints from each route, declared in the Rails app.
+### Insertar la URL de la API y crear la función apiFetch
+Esta función obtendrá los datos de la API, requiriendo su "url" (el lugar donde está alojado) y los puntos finales de cada ruta, declarados en la aplicación Rails.
 ```bash
 import { BASE_URI} from "../config.js";
 
@@ -97,36 +100,40 @@ export default async function apiFetch(endPoint, {method, headers, body} = {}) {
 }
 ```
 
-### Fetch the data
-Since the apiFetch function returns a Promise, the async/await duo will be used to resolve it.
+### Extraer los datos de los productos y categorías
+Dado que la función apiFetch devuelve una Promesa, se usará el dúo async/await para resolverlo.
 ```bash
 import apiFetch from "./api-fetch.js";
 
-export async function getProducts() {
-  return await apiFetch("/product/index");
+// Estas funciones utilizan la función de apiFetch para conectar con el API y extraer los datos.
+export async function getProductsSearched(id) {
+  return await apiFetch(`/product/search?query=${id}`);
 }
 
 export async function getCategories() {
   return await apiFetch("/category/index");
 }
-```
 
-### Fill the data on arrays and create the filter function
-The constant STORE will store the fetch functions, the product and category arrays and the filter function so the data sent to the user is the correct one.
-```bash
-async function fetchProducts() {
-  const products = await getProducts();
+```
+Los datos deberían regresar dentro de la estructura de un JSON:
+![image](https://user-images.githubusercontent.com/104693521/201512845-8f6423f6-ebff-4752-8cbf-8bc358497dfc.png)
+![image](https://user-images.githubusercontent.com/104693521/201512921-fbe541d0-7ad5-445d-8afc-74bf62afc006.png)
+
+
+### Rellenar los datos en matrices y cree la función de filtro.
+La constante STORE almacenará las funciones de búsqueda, las matrices de productos y categorías y la función de filtro para que los datos enviados al usuario sean los correctos.```bash
+async function fetchProducts(id='') {
+  // this.loader = true;
+  const products = await getProductsSearched(id);
   this.products = products;
+  this.products !== [] ? this.loader = false : this.loader = true;
 }
 
+// Esta función filtra la lista de productos de acuerdo a la categoría deseada
 function currentProductsFiltered () {
-  if ((this.categoryFilter === "" || this.categoryFilter === undefined) && this.searchQuery === "" ) return this.products
-
-  if (this.categoryFilter === "" || this.categoryFilter === undefined) {
-    return this.products.filter((product) => product.name.toLowerCase().includes(this.searchQuery));
-  } ;
+  if (this.categoryFilter === "" || this.categoryFilter === undefined) return this.products
   
-  return this.products.filter((product) => product.category ==  this.categoryFilter && product.name.toLowerCase().includes(this.searchQuery));
+  return this.products.filter((product) => product.category ==  this.categoryFilter);
 }
 
 async function fetchCategories() {
@@ -138,20 +145,23 @@ function currentCategories () {
   return this.categories
 }
 
+// El STORE guarda todos los datos extraídos de la API y los filtros necesarios para renderizar 
+// los datos deseados en el HomePage
 export const STORE = {
   products: [],
+  loader: true,
   fetchProducts,
   currentProductsFiltered,
   categories: [],
   fetchCategories,
   currentCategories,
   categoryFilter: "",
-  searchQuery: "",
 };
+
 ```
 
-### Initialize the fetching and home page
-With this function inside `index.js`, the products and categories will be fetched from the API and the home page and all of its components will be loaded witht he DOMHandler.
+### Inicializar la búsqueda y la página de inicio
+Con esta función dentro de `index.js`, los productos y categorías se obtendrán de la API y la página de inicio y todos sus componentes se cargarán con el DOMHhandler.
 ```bash
 import DOMHandler from "./dom-handler.js";
 import { HomePage } from "./HomePage/HomePage.js";
@@ -171,18 +181,17 @@ async function init() {
 init()
 
 ```
+![image](https://user-images.githubusercontent.com/104693521/201512954-002af3d7-a547-4621-8b61-399541a2c831.png)
 
 
-## Testing
-### Precense of list of categories and products
-With the help of the JEST and Babel libraries, tests can be run on Javascript. Simply execute the command `$npm test` on the console to check if it was successful.
+
+## Pruebas
+### Presencia de listado de categorías y productos
+Con la ayuda de las bibliotecas JEST y Babel, las pruebas se pueden ejecutar en Javascript. Simplemente ejecute el comando `$npm test` en la consola para verificar si tuvo éxito.
 ```bash
 import { beforeEach, expect } from "@jest/globals";
 import DOMHandler from "../dom-handler.js";
 import { HomePage } from "./HomePage.js";
-
-
-
 
 let App;
 
@@ -206,6 +215,10 @@ test("List renders on the DOM", () => {
 });
 
 ```
+![image](https://user-images.githubusercontent.com/104693521/201513300-6f05d583-6426-488a-aced-8d7f545ad923.png)
+
+
+
 
 
 
