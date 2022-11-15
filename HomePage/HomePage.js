@@ -6,7 +6,6 @@ import { STORE } from "../services/products-services.js";
 function render() {
     const products = STORE.currentProductsFiltered().sort((a, b) => a.name.normalize().localeCompare(b.name.normalize()))
     const categories = STORE.currentCategories()
-    console.log(products)
   return `
     <p class="content-xs mb-4"> Secret: Click in between the buttons to reset the category filters :) </p>
     <ul class="js-category-list">
