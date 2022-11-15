@@ -35,9 +35,6 @@ function listenFilter() {
 // Esta función inserta el listener que al presionar el botor ENTER corra el servicio de fetchProducts y 
 // se pueda extraer la lista de productos deseados de acuerdo a lo digitado en la barra de busqueda.
 document.querySelector('.js-search').addEventListener("keypress", async function listenSearch(e) {
-  // const search = document.querySelector(".js-search")
-  // if (search) {
-  // search.addEventListener("keypress",async (e) =>{
     if (e.key === 'Enter') {
       e.preventDefault();
       await STORE.fetchProducts(e.target.value.toLowerCase())

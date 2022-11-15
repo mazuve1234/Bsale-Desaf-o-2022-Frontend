@@ -8,8 +8,8 @@ export function renderProduct(product) {
       <div class="product-card">
         <p class="content-sm bold">${product.name}</p>
         <div class="flex gap-4">
-          ${product.discount ? `<p class="price-before">S/. ${(product.price/100).toFixed(2)}</p>`: `<p> S/. ${(product.price/100).toFixed(2)}</p>`}
-          ${product.discount ? `<p class="price-after">S/. ${Math.round((product.price/100) * (1-(product.discount/100))).toFixed(2)}</p>` : ""}
+          ${product.discount ? `<p class="price-before">$ ${(product.price)}</p>`: `<p> $ ${(product.price)}</p>`}
+          ${product.discount ? `<p class="price-after">$ ${Math.round((product.price) * (1-(product.discount/100))).toFixed(2)}</p>` : ""}
         </div>
       </div>
     </li>
